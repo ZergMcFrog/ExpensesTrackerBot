@@ -1,12 +1,13 @@
 #Module containing all the model classes
 
+class User():
 
-class User(object):
-    
-    def __init__(self, name):
+    def __init__(self, name, admin=False):
         self.name = name
+        self.admin = admin
 
-class good(object):
+
+class Good():
 
     def __init__(self, name):
         self.__name = name
