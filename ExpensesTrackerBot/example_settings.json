@@ -1,0 +1,9 @@
+{
+    "bot":{
+        "key": "some_key"
+    },
+    "database":{
+        "type": "sqlite",
+        "target": "J:\\ust\\a\\directory\\or\\ip.db"
+    }
+}

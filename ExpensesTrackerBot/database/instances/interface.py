@@ -2,6 +2,15 @@
 
 class AbstractDatabase():
 
+    def startTransaction(self):
+        raise NotImplementedError
+
+    def commit(self):
+        raise NotImplementedError
+
+    def rollback(self):
+        raise NotImplementedError
+
     def addUser(self, name, admin=False):
         raise NotImplementedError
 
