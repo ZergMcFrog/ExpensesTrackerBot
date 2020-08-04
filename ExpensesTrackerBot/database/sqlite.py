@@ -1,8 +1,7 @@
 #Concrete implementation for connecting to sqlite databases
 import sqlite3 as sqlite
-from .interface import AbstractDatabase
 
-class ConcreteDatabase(AbstractDatabase):
+class Database():
 
     def __init__(self, config):
         self.config = config
@@ -20,8 +19,7 @@ class ConcreteDatabase(AbstractDatabase):
 
     def addUser(self, name, admin=False):
         self.startTransaction()
-        self.cursor.execute("INSERT INTO user (name, admin) VALUES('{}', );".format(name))
-
+        self.cursor.execute("INSERT INTO user (name, admin) VALUES('{0}', {1});".format(name, admin))
 
     def deleteUser(self, name):
         pass

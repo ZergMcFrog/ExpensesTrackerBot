@@ -1,7 +1,5 @@
-#Module that handles the backand business logic and connects to telegram
-import logging
+#Module that handles the backend business logic and connects to telegram
 from telegram.ext import Updater, CommandHandler
-
 
 def start(update, context):
     startMessage = "I'm the ExpensesTrackerBot. I will keep track of your and your friends expenses.\n\n"
@@ -13,10 +11,9 @@ def start(update, context):
 def addUser(update, context):
     pass
 
-def startBot(botSettings, database):
+def startBot(botSettings):
     updater = Updater(token=botSettings["key"], use_context=True)
     dispatcher = updater.dispatcher
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.ERROR)
     startHandler = CommandHandler("start", start)
     newUserHandler = CommandHandler("newUser", addUser)
     dispatcher.add_handler(startHandler)
