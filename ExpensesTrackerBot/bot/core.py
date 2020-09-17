@@ -14,6 +14,7 @@ def addUser(update, context):
     userInput = " ".join(context.args)
     userName = userInput.split(" ")[0]
     db.getInstance().addUser(userName, False)
+    context.bot.send_message(chat_id=update.effective_chat.id, text="User {} succesfully added!".format(userName))
 
 def addItem(update, context):
     userInput = " ".join(context.args)
