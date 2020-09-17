@@ -7,19 +7,27 @@ def start(update, context):
     startMessage += "Following commands are currently avaiable:\n"
     startMessage += "/start: Replay this message\n"
     startMessage += "/addUser <username>: Add this person to the tracked list (name must be unique and whitespaces are not allowed)\n"
+    startMessage += "/addItem <itemname> <price/amount>: Add this item to the tracked list. Choose if the total price or amount should be tracked\n"
     context.bot.send_message(chat_id=update.effective_chat.id, text=startMessage)
 
 def addUser(update, context):
     userInput = " ".join(context.args)
     userName = userInput.split(" ")[0]
-    database = db.getInstance()
-    database.addUser(userName, False)
+    db.getInstance().addUser(userName, False)
+
+def addItem(update, context):
+    userInput = " ".join(context.args)
+    item, price = userInput.split(" ")
+    db.getInstance().addItem(item, price)
+
 
 def startBot(botSettings):
     updater = Updater(token=botSettings["key"], use_context=True)
     dispatcher = updater.dispatcher
     startHandler = CommandHandler("start", start)
     newUserHandler = CommandHandler("addUser", addUser)
+    newItemHandler = CommandHandler("addItem", addItem)
     dispatcher.add_handler(startHandler)
     dispatcher.add_handler(newUserHandler)
+    dispatcher.add_handler(newItemHandler)
     updater.start_polling()
