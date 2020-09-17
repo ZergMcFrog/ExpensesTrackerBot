@@ -1,5 +1,6 @@
 #Module that handles the backend business logic and connects to telegram
 from telegram.ext import Updater, CommandHandler
+from ExpensesTrackerBot.database import database as db
 
 def start(update, context):
     startMessage = "I'm the ExpensesTrackerBot. I will keep track of your and your friends expenses.\n\n"
@@ -9,13 +10,15 @@ def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text=startMessage)
 
 def addUser(update, context):
-    pass
+    userName = " ".join(context.args)[0]
+    database = db.getInstance()
+    database.addUser(userName, False)
 
 def startBot(botSettings):
     updater = Updater(token=botSettings["key"], use_context=True)
     dispatcher = updater.dispatcher
     startHandler = CommandHandler("start", start)
-    newUserHandler = CommandHandler("newUser", addUser)
+    newUserHandler = CommandHandler("addUser", addUser)
     dispatcher.add_handler(startHandler)
     dispatcher.add_handler(newUserHandler)
     updater.start_polling()

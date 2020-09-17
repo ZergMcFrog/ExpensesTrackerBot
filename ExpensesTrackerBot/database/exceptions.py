@@ -11,3 +11,10 @@ class NoInstanceException(Exception):
     def __init__(self):
         self.message = "No instance for a database found"
         super().__init__(self.message)
+
+class NoConnectionToDatabaseException(Exception):
+    '''Raised when the connection to the database could not be established'''
+    
+    def __init__(self, location):
+        self.message = "Could not connect to database at: {}".format(location)
+        super().__init__(self.message)

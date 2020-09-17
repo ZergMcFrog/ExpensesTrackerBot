@@ -1,7 +1,7 @@
 #Setting up and starting the bot
 import json
 from bot.core import startBot
-from database.database import createDatabase
+from database.database import Database
 from database.exceptions import InstanceAlreadyExistsException
 
 def loadSettings():
@@ -12,7 +12,7 @@ def loadSettings():
 def main():
     settings = loadSettings()
     try:
-        createDatabase(settings["database"])
+        Database.setConfig(settings["bot"])
     except InstanceAlreadyExistsException:
         print("There is already an instance") #TODO replace with proper logging
     startBot(settings["bot"])
