@@ -1,4 +1,5 @@
 #Module that handles the backend business logic and connects to telegram
+from sqlite3 import IntegrityError
 from telegram.ext import Updater, CommandHandler
 from ExpensesTrackerBot.database.database import Database as db
 
@@ -13,7 +14,10 @@ def start(update, context):
 def addUser(update, context):
     userInput = " ".join(context.args)
     userName = userInput.split(" ")[0]
-    db.getInstance().addUser(userName, False)
+    try:
+        db.getInstance().addUser(userName, False)
+    except IntegrityError:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Could not add user. Username {} has already been given".format(userName))
     context.bot.send_message(chat_id=update.effective_chat.id, text="User {} succesfully added!".format(userName))
 
 def addItem(update, context):
