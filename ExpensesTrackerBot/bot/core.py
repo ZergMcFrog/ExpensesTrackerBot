@@ -23,7 +23,11 @@ def addUser(update, context):
 def addItem(update, context):
     userInput = " ".join(context.args)
     item, price = userInput.split(" ")
-    db.getInstance().addItem(item, price)
+    try:
+        db.getInstance().addItem(item, price)
+    except UnboundLocalError: #If the input from the user wasn't correct a variable in the function will not be set, resulting in this error
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Could not add item. A proper type has not been given.")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Item {0} succesfully added! The total {1} will be tracked".format(item, price))
 
 
 def startBot(botSettings):
