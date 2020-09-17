@@ -19,10 +19,20 @@ class Database():
         def rollback(self):
             self.cursor.execute("ROLLBACK;")
 
-        def addUser(self, name, admin):
+        def addUser(self, name, admin=False):
             self.startTransaction()
             self.cursor.execute("INSERT INTO user (name, admin) VALUES('{0}', {1});".format(name, admin))
             self.commit()
+
+        def addItem(self, item, price="price"):
+            if price == "price":
+                priceToTrack = True
+            if price == "amount":
+                priceToTrack = False
+            self.startTransaction()
+            self.cursor.execute("INSERT INTO item (item_name, price) VALUES('{0}', {1});".format(item, priceToTrack))
+            self.commit()
+
 
         def deleteUser(self, name):
             pass
